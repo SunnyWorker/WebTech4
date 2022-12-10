@@ -21,6 +21,9 @@ public class User {
     private Timestamp registrationTime;
     @Column(nullable = false)
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
     @Column(nullable = false)
     private String passwordHash;
 }
