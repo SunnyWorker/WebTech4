@@ -22,7 +22,7 @@ public class DAOUserHibernate implements DAOUser{
     }
     
     @Override
-    public Optional<User> findBoookingById(long id) {
+    public User findBoookingById(long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         User user;
@@ -36,7 +36,32 @@ public class DAOUserHibernate implements DAOUser{
         } finally {
             session.close();
         }
-        return Optional.of(user);
+        return user;
+    }
+
+    @Override
+    public User findBoookingByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
+        Root<User> root = cr.from(User.class);
+        cr.select(root);
+        cr.where(criteriaBuilder.equal(root.get("email"),email));
+        List<User> users = null;
+        try {
+            transaction = session.beginTransaction();
+            users = session.createQuery(cr).getResultList();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction!=null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+        if(users.size()>0) return users.get(0);
+        else return null;
     }
 
     @Override

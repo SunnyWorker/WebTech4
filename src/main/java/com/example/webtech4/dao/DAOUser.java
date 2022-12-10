@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DAOUser {
-    Optional<User> findBoookingById(long id);
+    User findBoookingById(long id);
+    User findBoookingByEmail(String email);
     List<User> findAllUsers();
     void saveUser(User user);
     void deleteUser(User user);

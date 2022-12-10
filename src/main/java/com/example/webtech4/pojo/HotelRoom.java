@@ -16,7 +16,4 @@ public class HotelRoom {
     private Hotel hotel;
     @Column(nullable = false)
     private short room;
-    @Column(nullable = false)
-    private boolean isOccupied;
-
 }

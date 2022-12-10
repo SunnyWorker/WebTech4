@@ -5,12 +5,12 @@
          version="5.0">
     <servlet>
         <servlet-name>bookingServlet</servlet-name>
-        <servlet-class>com.example.webtech4.servlets.BookingServlet</servlet-class>
+        <servlet-class>com.example.webtech4.servlets.booking.AddBookingServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>authServlet</servlet-name>
-        <servlet-class>com.example.webtech4.servlets.AuthorizationServlet</servlet-class>
+        <servlet-class>com.example.webtech4.servlets.user.AuthorizationServlet</servlet-class>
     </servlet>
 
 

@@ -19,11 +19,11 @@ public class User {
     private String surname;
     @Column(nullable = false)
     private Timestamp registrationTime;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
     @Column(nullable = false)
-    private String passwordHash;
+    private int passwordHash;
 }
