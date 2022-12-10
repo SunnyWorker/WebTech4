@@ -1,4 +1,4 @@
-package com.example.webtech4;
+package com.example.webtech4.servlets;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
