@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "ClientFilter")
+@WebFilter(filterName = "ClientFilter", urlPatterns = {"/booking/book","/booking/deleteBook"})
 public class ClientFilter implements Filter {
 
     private UserService userService;

@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "AdminFilter")
+@WebFilter(filterName = "AdminFilter", urlPatterns = {"/booking/getAllBookings"})
 public class AdminFilter implements Filter {
 
     private UserService userService;

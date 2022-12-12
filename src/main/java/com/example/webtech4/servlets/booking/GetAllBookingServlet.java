@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GetAllBookingServlet", value = "/getAllBookings")
+@WebServlet(name = "GetAllBookingServlet", value = "/booking/getAllBookings")
 public class GetAllBookingServlet extends HttpServlet {
 
     private BookingService bookingService = new BookingServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         bookingService.getAllBookings(request, response);
     }
 }

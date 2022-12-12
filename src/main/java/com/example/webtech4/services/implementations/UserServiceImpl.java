@@ -140,6 +140,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isAdmin(ServletRequest request, ServletResponse response) {
         User admin = (User)request.getAttribute("user");
-        return admin.getRole().getName().equals("admin");
+        return admin!=null && admin.getRole().getName().equals("admin");
     }
 }
