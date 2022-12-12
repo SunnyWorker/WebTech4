@@ -3,15 +3,15 @@ package com.example.webtech4.services.implementations;
 import com.example.webtech4.converters.JSONConverter;
 import com.example.webtech4.dao.DAOUser;
 import com.example.webtech4.dao.DAOUserHibernate;
+import com.example.webtech4.dao.HibernateUtil;
 import com.example.webtech4.pojo.Booking;
 import com.example.webtech4.pojo.User;
 import com.example.webtech4.services.interfaces.UserService;
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,12 +23,13 @@ public class UserServiceImpl implements UserService {
     private DAOUser daoUser;
 
     public UserServiceImpl() {
-        daoUser = new DAOUserHibernate();
+        daoUser = new DAOUserHibernate(HibernateUtil.getSessionFactory());
         bookingJSONConverter = new JSONConverter();
     }
 
     @Override
     public void authorize(HttpServletRequest request, HttpServletResponse response) {
+        String rus = (String) request.getAttribute("rus");
         PrintWriter out = null;
         try {
             out = response.getWriter();
@@ -37,7 +38,8 @@ public class UserServiceImpl implements UserService {
         }
         if(request.getAttribute("user")!=null) {
             out.println("<html><body>");
-            out.println("<h1>Вы уже авторизованы! Для начала разлогиньтесь!</h1>");
+            if(rus!=null) out.println("<h1>Вы уже авторизованы! Для начала разлогиньтесь!</h1>");
+            else out.println("<h1>You have been already authorized! First of all, logout!</h1>");
             out.println("</body></html>");
             return;
         }
@@ -52,13 +54,15 @@ public class UserServiceImpl implements UserService {
         if(dbUser.getPasswordHash() == user.getPasswordHash()) {
             request.getSession().setAttribute("user",dbUser);
             out.println("<html><body>");
-            out.println("<h1>Авторизация успешна!</h1>");
+            if(rus!=null) out.println("<h1>Авторизация успешна!</h1>");
+            else out.println("<h1>Authorization complete!</h1>");
             out.println("</body></html>");
         }
     }
 
     @Override
     public void register(HttpServletRequest request, HttpServletResponse response) {
+        String rus = (String) request.getAttribute("rus");
         PrintWriter out = null;
         try {
             out = response.getWriter();
@@ -67,7 +71,8 @@ public class UserServiceImpl implements UserService {
         }
         if(request.getAttribute("user")!=null) {
             out.println("<html><body>");
-            out.println("<h1>Вы уже авторизованы! Для начала разлогиньтесь!</h1>");
+            if(rus!=null) out.println("<h1>Вы уже авторизованы! Для начала разлогиньтесь!</h1>");
+            else out.println("<h1>You have been already authorized! First of all, logout!</h1>");
             out.println("</body></html>");
             return;
         }
@@ -84,24 +89,28 @@ public class UserServiceImpl implements UserService {
             daoUser.saveUser(user);
             request.getSession().setAttribute("user",user);
             out.println("<html><body>");
-            out.println("<h1>Регистрация успешна!</h1>");
+            if(rus!=null) out.println("<h1>Регистрация успешна!</h1>");
+            else out.println("<h1>Registration complete!</h1>");
             out.println("</body></html>");
         }
         else {
             out.println("<html><body>");
-            out.println("<h1>Такой пользователь уже есть!</h1>");
+            if(rus!=null) out.println("<h1>Такой пользователь уже есть!</h1>");
+            else out.println("<h1>Such user is already exists!</h1>");
             out.println("</body></html>");
         }
     }
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
+        String rus = (String) request.getAttribute("rus");
         PrintWriter out = null;
         if(request.getAttribute("user")==null) {
             try {
                 out = response.getWriter();
                 out.println("<html><body>");
-                out.println("<h1>Вы не авторизованы! Для начала залогиньтесь!</h1>");
+                if(rus!=null) out.println("<h1>Вы не авторизованы! Для начала залогиньтесь!</h1>");
+                else out.println("<h1>You are not authorized! First of all, log in!!</h1>");
                 out.println("</body></html>");
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -114,7 +123,8 @@ public class UserServiceImpl implements UserService {
         try {
             out = response.getWriter();
             out.println("<html><body>");
-            out.println("<h1>Вы разлогинены!</h1>");
+            if(rus!=null) out.println("<h1>Вы разлогинены!</h1>");
+            else out.println("<h1>You have been logout!</h1>");
             out.println("</body></html>");
         } catch (IOException e) {
             throw new RuntimeException(e);

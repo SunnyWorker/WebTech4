@@ -1,7 +1,8 @@
 package com.example.webtech4.services.interfaces;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface BookingService {
     void book(HttpServletRequest request, HttpServletResponse response);

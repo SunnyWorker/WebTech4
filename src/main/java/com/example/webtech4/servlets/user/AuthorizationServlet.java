@@ -2,11 +2,11 @@ package com.example.webtech4.servlets.user;
 
 import com.example.webtech4.services.implementations.UserServiceImpl;
 import com.example.webtech4.services.interfaces.UserService;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 
-import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "AuthorizationServlet", value = "/user/authorize")
 public class AuthorizationServlet extends HttpServlet {
@@ -18,7 +18,7 @@ public class AuthorizationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         userService.authorize(request, response);
     }
 }

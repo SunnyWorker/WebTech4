@@ -4,20 +4,19 @@ import com.example.webtech4.services.implementations.BookingServiceImpl;
 import com.example.webtech4.services.implementations.UserServiceImpl;
 import com.example.webtech4.services.interfaces.BookingService;
 import com.example.webtech4.services.interfaces.UserService;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GetAllBookingServlet", value = "/booking/getAllBookings")
+@WebServlet(name = "GetAllBookingServlet", value = "/getAllBookings")
 public class GetAllBookingServlet extends HttpServlet {
 
-    private BookingService bookingService;
-
-    public GetAllBookingServlet() {
-        bookingService = new BookingServiceImpl();
-    }
+    private BookingService bookingService = new BookingServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
